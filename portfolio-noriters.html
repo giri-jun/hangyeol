@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>포트폴리오 – 보드게임카페 노리터 | 한결디자인</title>
+
+  <!-- Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome (아이콘 필요 시) -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: #111;
+      background-color: #fafafa;
+      line-height: 1.6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* 헤더 */
+    header.header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .logo span {
+      color: #d65c36;
+    }
+
+    nav.nav {
+      display: flex;
+      gap: 24px;
+      font-size: 14px;
+    }
+
+    nav.nav a {
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    nav.nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background-color: #d65c36;
+      transition: width 0.25s ease;
+    }
+
+    nav.nav a:hover::after {
+      width: 100%;
+    }
+
+    .header-cta {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid #d65c36;
+      font-size: 13px;
+      background-color: #fff;
+      color: #d65c36;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .header-cta:hover {
+      background-color: #d65c36;
+      color: #fff;
+    }
+
+    .nav-toggle {
+      display: none;
+      border: none;
+      background: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* 상세 페이지 좌우 내비게이션 */
+    .portfolio-nav {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1500;
+    }
+
+    .portfolio-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(17, 17, 17, 0.78);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+      transition: background 0.2s ease, transform 0.2s ease;
+      pointer-events: auto;
+    }
+
+    .portfolio-nav-btn.nav-prev {
+      left: 18px;
+    }
+
+    .portfolio-nav-btn.nav-next {
+      right: 18px;
+    }
+
+    .portfolio-nav-btn:hover {
+      background: rgba(214, 92, 54, 0.9);
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    @media (max-width: 720px) {
+      .portfolio-nav-btn {
+        width: 38px;
+        height: 38px;
+      }
+      .portfolio-nav-btn.nav-prev {
+        left: 8px;
+      }
+      .portfolio-nav-btn.nav-next {
+        right: 8px;
+      }
+    }
+
+    /* 히어로 */
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 320px;
+      margin-top: 72px; /* 헤더 높이 보정 */
+      background: #111;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url("images/8/8-20.jpg");
+      /* ↑ 실제 메인 사진 경로로 수정 */
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.6);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        rgba(0, 0, 0, 0.75),
+        rgba(0, 0, 0, 0.35)
+      );
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 16px 60px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr);
+      gap: 32px;
+      align-items: flex-end;
+    }
+
+    .hero-title-area {
+      max-width: 640px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 8px;
+      min-height: 180px;
+    }
+
+    .hero-label {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #ffd9a6;
+      margin: 0;
+    }
+
+    .hero-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      margin: 0;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      font-size: 12px;
+      opacity: 0.9;
+      justify-content: flex-end;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+
+    .hero-meta-label {
+      opacity: 0.7;
+    }
+
+    .hero-meta-value {
+      font-weight: 500;
+    }
+
+    /* 공통 섹션 */
+    section.section {
+      padding: 60px 0;
+    }
+
+    .section-header {
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .section-subtitle {
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* 개요 */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      align-items: flex-start;
+    }
+
+    .overview-text {
+      font-size: 14px;
+      color: #444;
+    }
+
+    .overview-list {
+      background: #fff;
+      border-radius: 18px;
+      padding: 18px 20px 16px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.03);
+      font-size: 13px;
+      align-self: flex-start;
+      margin-top: -24px;
+    }
+
+    .overview-list-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 4px 0;
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
+    }
+
+    .overview-list-row:last-child {
+      border-bottom: none;
+    }
+
+    .overview-term {
+      color: #777;
+      min-width: 80px;
+    }
+
+    .overview-desc {
+      text-align: right;
+      font-weight: 500;
+    }
+
+    /* 컨셉 텍스트 */
+    .concept-list {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #444;
+      list-style: none;
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+    .concept-list li {
+      margin-bottom: 4px;
+    }
+
+    /* 이미지 갤러리 */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .gallery-item {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #eee;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .gallery-caption {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* 라이트박스 */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+      z-index: 2000;
+      cursor: zoom-out;
+    }
+    .lightbox.open {
+      visibility: visible;
+      opacity: 1;
+    }
+    .lightbox img {
+      max-width: min(90vw, 1200px);
+      max-height: 85vh;
+      border-radius: 18px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+      object-fit: contain;
+      background: #111;
+    }
+
+    /* 버튼들 */
+    .btn-row {
+      margin-top: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn-outline,
+    .btn-primary {
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 13px;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.1s ease, box-shadow 0.15s ease,
+        background 0.15s ease, color 0.15s ease;
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+
+    .btn-outline:hover {
+      background: #f4f4f4;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-primary {
+      background: #d65c36;
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.22);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 26px rgba(0, 0, 0, 0.3);
+    }
+
+    /* 푸터 */
+    footer.footer {
+      padding: 24px 0 30px;
+      background-color: #111;
+      color: #ccc;
+      font-size: 12px;
+      margin-top: 40px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    /* 반응형 */
+    @media (max-width: 1024px) {
+      .header-inner {
+        padding: 10px 12px;
+      }
+      .logo {
+        font-size: 18px;
+      }
+      nav.nav {
+        gap: 16px;
+        font-size: 13px;
+      }
+      .header-cta {
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .overview-list {
+        margin-top: 0;
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .hero-meta {
+        justify-content: flex-start;
+      }
+      .hero-meta-item {
+        align-items: flex-start;
+      }
+      .overview-grid {
+        grid-template-columns: 1fr;
+      }
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      /* 헤더 레이아웃: 상단 로고+버튼, 하단 메뉴 */
+      .header-inner {
+        flex-wrap: wrap;
+        row-gap: 8px;
+      }
+      .header-left {
+        order: 0;
+        flex: 0 0 auto;
+      }
+      .header-cta {
+        order: 1;
+        flex: 0 0 auto;
+        margin-left: auto;
+        padding: 6px 14px;
+        font-size: 12px;
+      }
+      nav.nav {
+        order: 2;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0;
+        font-size: 14px;
+        padding-top: 6px;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      nav.nav a {
+        flex: 1 1 20%;
+        text-align: center;
+        padding: 6px 0;
+        border-radius: 999px;
+        box-sizing: border-box;
+      }
+      .logo {
+        font-size: 17px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        margin-top: 90px;
+      }
+      .hero-inner {
+        padding: 28px 16px 40px;
+      }
+      .hero-title {
+        font-size: 26px;
+      }
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+      nav.nav {
+        font-size: 13px;
+      }
+      nav.nav a {
+        padding: 5px 0;
+      }
+      .logo {
+        font-size: 16px;
+      }
+      .header-cta {
+        font-size: 11px;
+        padding: 4px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <button class="nav-toggle" aria-label="메뉴 열기">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <!-- 메인 페이지로 돌아가기 -->
+        <a href="index 2 .html" class="logo">
+          한결<span>디자인</span>
+        </a>
+      </div>
+
+      <!-- 모두 메인 페이지 섹션으로 이동하도록 링크 처리 -->
+      <nav class="nav">
+        <a href="index 2 .html#about">회사소개</a>
+        <a href="index 2 .html#services">주요서비스</a>
+        <a href="index 2 .html#portfolio">포트폴리오</a>
+        <a href="index 2 .html#process">진행절차</a>
+        <a href="index 2 .html#contact">문의하기</a>
+      </nav>
+
+      <a
+        class="header-cta"
+        href="http://pf.kakao.com/_gxkxbxgn"
+        target="_blank"
+      >
+        무료 상담 요청
+      </a>
+    </div>
+  </header>
+
+  <!-- 페이지 내비게이션 -->
+  <div class="portfolio-nav" aria-label="포트폴리오 페이지 이동">
+    <a class="portfolio-nav-btn nav-prev" href="portfolio-supullim.html" aria-label="이전 포트폴리오">
+      <i class="fa-solid fa-chevron-left"></i>
+    </a>
+    <a class="portfolio-nav-btn nav-next" href="portfolio-paranmanjan.html" aria-label="다음 포트폴리오">
+      <i class="fa-solid fa-chevron-right"></i>
+    </a>
+  </div>
+
+
+
+  <!-- 히어로 -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-inner">
+      <div class="hero-title-area">
+        <div class="hero-label">Portfolio · Edutainment</div>
+        <h1 class="hero-title">보드게임카페 노리터</h1>
+        <p class="hero-subtitle">
+          4세대 보드게임카페의 체험형 공간을 구현한 프로젝트입니다.
+        </p>
+      </div>
+
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">위치</div>
+          <div class="hero-meta-value">전국</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">면적</div>
+          <div class="hero-meta-value">80 ~ 130평</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">프로젝트 유형</div>
+          <div class="hero-meta-value">신규</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">공사 기간</div>
+          <div class="hero-meta-value">5 ~ 7주</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 프로젝트 개요 -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">프로젝트 개요</h2>
+        <p class="section-subtitle">
+          · 놀이와 휴식이 공존하는 다층형 공간을 설계했습니다.
+        </p>
+      </div>
+
+      <div class="overview-grid">
+        <div class="overview-text">
+          <p>
+            &nbsp;보드게임카페 노리터는 놀이, 휴식, 간식이 동시에 이뤄지는 복합공간입니다. 층고와 구조를 활용해 존을 명확히 구분하되 시각적 개방감을 유지했습니다.
+          </p>
+          <p>
+            &nbsp;메인 게임존은 모듈형 테이블과 수납을 결합해 다양한 인원이 편하게 즐길 수 있게 했고, 벙커베드 좌석과 프라이빗룸을 배치해 체류 시간을 늘렸습니다.
+          </p>
+          <p>
+            &nbsp;브랜드 컬러를 재해석한 그래픽과 사인을 곳곳에 배치해 아이덴티티를 강화하고, 미디어 월을 통해 이벤트와 공지를 실시간으로 노출했습니다.
+          </p>
+
+          <div class="btn-row">
+            <a href="index 2 .html#portfolio" class="btn-outline">
+              ← 포트폴리오 목록으로
+            </a>
+            <a href="http://pf.kakao.com/_gxkxbxgn/chat" class="btn-primary" target="_blank">
+              <i class="fa-solid fa-comment-dots"></i>
+              이 스타일로 매장 상담하기
+            </a>
+          </div>
+        </div>
+
+        <div class="overview-list">
+          <div class="overview-list-row">
+            <div class="overview-term">브랜드</div>
+            <div class="overview-desc">보드게임카페 노리터</div>
+          </div>
+          <div class="overview-list-row">
+            <div class="overview-term">위치</div>
+            <div class="overview-desc">전국</div>
+          </div>
+          <div class="overview-list-row">
+            <div class="overview-term">면적</div>
+            <div class="overview-desc">80 ~ 130평</div>
+          </div>
+          <div class="overview-list-row">
+            <div class="overview-term">프로젝트</div>
+            <div class="overview-desc">신규</div>
+          </div>
+          <div class="overview-list-row">
+            <div class="overview-term">범위</div>
+            <div class="overview-desc">공간 기획 · 설계 · 시공 · 감리</div>
+          </div>
+          <div class="overview-list-row">
+            <div class="overview-term">공사 기간</div>
+            <div class="overview-desc">5 ~ 7주</div>
+          </div>
+          <div class="overview-list-row">
+            <div class="overview-term">콘셉트 키워드</div>
+            <div class="overview-desc">보드게임 · 패밀리 · 체험</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 디자인 컨셉 -->
+  <section class="section" style="background:#ffffff;">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">디자인 컨셉</h2>
+        <p class="section-subtitle">
+          게임 몰입도를 높이는 공간 전략입니다.
+        </p>
+      </div>
+
+      <ul class="concept-list">
+        <li>· <b>존 플래닝</b>: 소음도를 고려해 게임존, 라운지, 카페존을 분리했습니다.</li>
+        <li>· <b>모듈 가구</b>: 수납과 테이블을 결합한 맞춤 가구로 운영 효율을 높였습니다.</li>
+        <li>· <b>테마 룸</b>: 벙커베드와 프라이빗룸으로 다양한 체류 경험을 제공합니다.</li>
+        <li>· <b>시그니처 컬러</b>: 브랜드 컬러와 픽토그램으로 공간에 리듬감을 부여했습니다.</li>
+        <li>· <b>미디어 월</b>: 실시간 대회와 공지를 표출하는 디지털 월을 구성했습니다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 이미지 갤러리 -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">현장 사진</h2>
+        <p class="section-subtitle">
+          게임 테이블, 라운지, 포토존까지 확인해 보세요.
+        </p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="images/8/8-1.jpg" alt="노리터 파사드" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/8/8-2.jpg" alt="노리터 입구" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/8/8-3.jpg" alt="노리터 게임존" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/8/8-4.jpg" alt="노리터 좌석 구성" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/8/8-5.jpg" alt="노리터 모듈 테이블" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/8/8-6.jpg" alt="노리터 라운지" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/8/8-7.jpg" alt="노리터 벙커베드 좌석" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/8/8-8.jpg" alt="노리터 그래픽 월" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/8/8-9.jpg" alt="노리터 카페존" />
+        </div>
+      </div>
+      <p class="gallery-caption">
+        ※ 노리터 매장은 지역 고객층에 맞춰 색상과 가구 구성을 조정합니다.
+      </p>
+    </div>
+  </section>
+
+  <div class="lightbox" id="galleryLightbox" aria-hidden="true">
+    <img id="lightboxImage" src="" alt="" />
+  </div>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 한결디자인. All rights reserved.</div>
+      <div>
+        <a href="index 2 .html#portfolio">← 포트폴리오 목록으로 돌아가기</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 모바일 메뉴 토글 (필요 시) 및 갤러리 라이트박스
+    document.addEventListener("DOMContentLoaded", function () {
+      const navToggle = document.querySelector(".nav-toggle");
+      const nav = document.querySelector("nav.nav");
+
+      if (navToggle && nav) {
+        navToggle.addEventListener("click", () => {
+          nav.classList.toggle("open");
+        });
+      }
+
+      const lightbox = document.getElementById("galleryLightbox");
+      const lightboxImage = document.getElementById("lightboxImage");
+      const galleryImages = document.querySelectorAll(".gallery-item img");
+
+      if (lightbox && lightboxImage && galleryImages.length) {
+        const openLightbox = (img) => {
+          lightboxImage.src = img.src;
+          lightboxImage.alt = img.alt || "";
+          lightbox.classList.add("open");
+          lightbox.setAttribute("aria-hidden", "false");
+        };
+
+        const closeLightbox = () => {
+          lightbox.classList.remove("open");
+          lightbox.setAttribute("aria-hidden", "true");
+          lightboxImage.src = "";
+          lightboxImage.alt = "";
+        };
+
+        galleryImages.forEach((img) => {
+          img.style.cursor = "zoom-in";
+          img.addEventListener("click", () => openLightbox(img));
+        });
+
+        lightbox.addEventListener("click", closeLightbox);
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && lightbox.classList.contains("open")) {
+            closeLightbox();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

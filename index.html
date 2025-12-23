@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>한결디자인 | 상업공간·인테리어 설계·시공 전문</title>
+
+  <!-- 웹폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-mw8JYkBQw1fU/5pLUDZ3Uqzeo2DArv9UYXp9sxrww4Gu6JC/6Fc4tltgRp8xHwt6wWsBtg5HHgs6XyoId5WeUA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <style>
+    /* 리셋 & 기본 설정 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: #111;
+      background-color: #fafafa;
+      line-height: 1.6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* 헤더 */
+    header.header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .logo span {
+      color: #d65c36;
+    }
+
+    nav.nav {
+      display: flex;
+      gap: 24px;
+      font-size: 14px;
+    }
+
+    nav.nav a {
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    nav.nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background-color: #d65c36;
+      transition: width 0.25s ease;
+    }
+
+    nav.nav a:hover::after {
+      width: 100%;
+    }
+
+    .header-cta {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid #d65c36;
+      font-size: 13px;
+      background-color: #fff;
+      color: #d65c36;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .header-cta:hover {
+      background-color: #d65c36;
+      color: #fff;
+    }
+
+    .nav-toggle {
+      display: none;
+      border: none;
+      background: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* 히어로 */
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 80px;
+      overflow: hidden;
+      background: #111;
+      color: #fff;
+    }
+
+    /* 디졸브용 배경 레이어 */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.7s linear;
+    }
+
+    .hero-bg.bg-a {
+      opacity: 1;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.35)
+      );
+      z-index: 1;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      width: 100%;
+      padding: 40px 16px 80px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-left {
+      max-width: 640px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+
+    .hero-badge span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #d6ff5c;
+    }
+
+    .hero-title {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 18px;
+    }
+
+    .hero-title strong {
+      color: #ffd9a6;
+      font-weight: 700;
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 24px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 32px;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-meta-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.7;
+    }
+
+    .hero-meta-value {
+      font-weight: 500;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn-primary,
+    .btn-outline {
+      border-radius: 999px;
+      padding: 10px 22px;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.1s ease, box-shadow 0.15s ease,
+        background 0.15s ease, color 0.15s ease;
+    }
+
+    .btn-primary {
+      background: #d65c36;
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 26px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Kakao brand button */
+    .btn-kakao {
+      background: #fee500;
+      color: #222;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-kakao:hover {
+      background: #f0d800;
+      color: #111;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-right {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .hero-card {
+      width: 100%;
+      max-width: 380px;
+      background: rgba(17, 17, 17, 0.88);
+      border-radius: 24px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-card-image {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .hero-card-image img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform 1s ease, opacity 0.6s ease;
+    }
+
+    .hero-card-image img.is-fading {
+      opacity: 0;
+    }
+
+    .hero-card:hover .hero-card-image img {
+      transform: scale(1.05);
+    }
+
+    .hero-card-tag {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+    }
+
+    .hero-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+      color: #eee;
+    }
+
+    .hero-card-title {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .hero-card-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .hero-card-badge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .hero-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      opacity: 0.8;
+    }
+
+    /* 공통 섹션 */
+    section.section {
+      padding: 80px 0;
+    }
+
+    /* 고정 헤더 높이만큼 앵커 위치 보정 (여백을 거의 없애는 버전) */
+    #about,
+    #services,
+    #portfolio,
+    #process,
+    #contact {
+      scroll-margin-top: 10px;  /* 데스크톱: 헤더 바로 아래에 가깝게 붙도록 최소 여백 */
+    }
+
+    @media (max-width: 900px) {
+      #about,
+      #services,
+      #portfolio,
+      #process,
+      #contact {
+        scroll-margin-top: 40px; /* 2줄 헤더 구간에서도 위 여백을 크게 줄인 값 */
+      }
+    }
+
+    section.section:nth-of-type(odd) {
+      background-color: #ffffff;
+    }
+
+    section.section:nth-of-type(even) {
+      background-color: #f4f4f4;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #d65c36;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .about-text p {
+      margin-bottom: 14px;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .about-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 10px;
+    }
+
+    .about-stat-item {
+      min-width: 120px;
+    }
+
+    .about-stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: #d65c36;
+    }
+
+    .about-stat-label {
+      font-size: 12px;
+      color: #777;
+    }
+
+    .about-image-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+    }
+
+    .about-image-grid div {
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .about-image-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+    }
+
+    /* Services */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .service-card {
+      background-color: #fff;
+      border-radius: 18px;
+      padding: 22px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .service-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      color: #d65c36;
+    }
+
+    .service-icon img {
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+    }
+
+    .service-title {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .service-desc {
+      font-size: 13px;
+      color: #555;
+    }
+
+    .service-meta {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #888;
+    }
+
+    /* Portfolio */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .project-card {
+      background-color: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .project-thumb {
+      position: relative;
+      overflow: hidden;
+      height: 190px;
+    }
+
+    .project-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+
+    .project-card:hover .project-thumb img {
+      transform: scale(1.05);
+    }
+
+    .project-body {
+      padding: 14px 16px 16px;
+      font-size: 13px;
+    }
+
+    .project-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .project-meta {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 4px;
+    }
+
+    .project-tag {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      background-color: #fafafa;
+    }
+
+    /* Process / Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+    }
+
+    .contact-simple {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .contact-simple p {
+      margin-bottom: 18px;
+    }
+
+    .contact-card {
+      background-color: #fff;
+      border-radius: 18px;
+      padding: 20px 20px 22px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.03);
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .form-field {
+      flex: 1;
+      min-width: 160px;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 4px;
+      color: #555;
+    }
+
+    .form-field input,
+    .form-field textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      padding: 10px 12px;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.15s ease, box-shadow 0.15s ease;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 42px;
+    }
+
+    .form-field textarea {
+      min-height: 110px;
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: #d65c36;
+      box-shadow: 0 0 0 2px rgba(214, 92, 54, 0.12);
+    }
+
+    .contact-info-list {
+      font-size: 14px;
+      color: #444;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contact-info-item i {
+      width: 20px;
+    }
+
+    /* Footer */
+    footer.footer {
+      padding: 24px 0 30px;
+      background-color: #111;
+      color: #ccc;
+      font-size: 12px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      opacity: 0.8;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    /* 반응형 */
+
+        /* ① 태블릿/좁은 화면일 때 헤더 폰트/여백 줄이기 */
+        @media (max-width: 1024px) {
+        .header-inner {
+            padding: 10px 12px;
+        }
+
+        .logo {
+            font-size: 18px;      /* 한결디자인 글씨 조금 축소 */
+        }
+
+        nav.nav {
+            gap: 16px;            /* 메뉴 간격 축소 */
+            font-size: 13px;      /* 메뉴 글자 크기 축소 */
+        }
+
+        .header-cta {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+    }
+
+        @media (max-width: 900px) {
+        .hero-inner {
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+        .hero {
+            min-height: 90vh;
+        }
+        .hero-right {
+            justify-content: flex-start;
+        }
+        .hero-title {
+            font-size: 32px;
+        }
+        .about-grid {
+            grid-template-columns: 1fr;
+        }
+        .services-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .portfolio-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        /* Process 반응형 */
+        .process-steps {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .contact-grid {
+            grid-template-columns: 1fr;
+        }
+
+        /* 헤더 레이아웃: 상단 로고+버튼, 하단 메뉴 */
+        .header-inner {
+            flex-wrap: wrap;              /* 두 줄로 나눌 수 있도록 */
+            row-gap: 8px;
+        }
+
+        .header-left {
+            order: 0;                     /* 1번째: 로고 */
+            flex: 0 0 auto;
+        }
+
+        .header-cta {
+            order: 1;                     /* 2번째: 무료 상담 요청 버튼 */
+            flex: 0 0 auto;
+            margin-left: auto;            /* 로고의 오른쪽 끝으로 붙이기 */
+        }
+
+        nav.nav {
+            order: 2;                     /* 3번째: 메뉴 탭 */
+            width: 100%;                  /* 두 번째 줄 전체 폭 사용 */
+            display: flex;
+            justify-content: space-between; /* 좌우 여백 없이 꽉 채우기 */
+            flex-wrap: wrap;               /* 폭이 더 줄면 2줄로 자연스럽게 줄바꿈 */
+            gap: 0;
+        }
+
+        /* 헤더 더 줄이기 + 메뉴 탭 버튼화 */
+        .logo {
+            font-size: 17px;
+        }
+        nav.nav {
+            font-size: 14px;              /* 기존 대비 약 10% 확대 (13px → 14px) */
+        }
+        nav.nav a {
+            flex: 1 1 20%;                /* 각 버튼이 가로 폭을 균등하게 나누도록 */
+            text-align: center;
+            padding: 6px 0;               /* 좌우 여백 없이 상하만 여백 */
+            border-radius: 999px;         /* 부드러운 pill 느낌 유지 */
+            box-sizing: border-box;
+        }
+        .header-cta {
+            padding: 6px 14px;
+            font-size: 12px;
+        }
+    }
+
+        @media (max-width: 600px) {
+        .hero-inner {
+            padding: 30px 16px 60px;
+        }
+        .hero-meta {
+            flex-direction: column;
+            gap: 10px;
+        }
+        .services-grid,
+        .portfolio-grid {
+            grid-template-columns: 1fr;
+        }
+        .contact-simple {
+            padding: 0 8px;
+        }
+        /* 헤더 타이포 조정 - 모바일 */
+        nav.nav {
+            font-size: 13px;          /* 12px → 13px, 약 10% 확대 */
+        }
+        nav.nav a {
+            padding: 5px 0;           /* 좌우 여백 없이 상하 여백만 */
+        }
+
+        .logo {
+            font-size: 16px;
+        }
+
+        .header-cta {
+            font-size: 11px;
+            padding: 4px 10px;
+        }
+        /* Process – 모바일 한 줄 */
+        .process-steps {
+            grid-template-columns: 1fr;
+        }
+    }
+
+        /* Process */
+        .process-steps {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+        }
+
+        .process-step {
+        background-color: #fff;
+        border-radius: 16px;
+        padding: 16px 16px 18px;
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        position: relative;
+        font-size: 13px;
+        }
+
+        .process-step-number {
+        position: absolute;
+        top: 12px;
+        right: 14px;
+        font-size: 26px;
+        font-weight: 700;
+        opacity: 0.08;
+        }
+
+        .process-step-title {
+        font-weight: 600;
+        margin-bottom: 6px;
+        }
+
+        .process-step-desc {
+        color: #555;
+        font-size: 13px;
+        }
+
+        /* Process – 화면이 좁을 때 세로 배열 + 카드 폭 100% */
+        @media (max-width: 900px) {
+        .process-steps {
+            grid-template-columns: 1fr;  /* 한 줄에 1개씩 */
+        }
+
+        .process-step {
+            min-width: auto;
+            width: 100%;                 /* 브라우저 폭과 동일 */
+        }
+        }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      gsap.registerPlugin(ScrollTrigger);
+      // 브라우저가 새로고침 후 스크롤 위치를 자동 복원하지 않도록 설정
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+
+      /* 히어로 텍스트/카드 애니메이션 */
+      gsap.from(".hero-badge", {
+        opacity: 0,
+        y: 10,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+
+      gsap.from(".hero-title", {
+        opacity: 0,
+        y: 30,
+        duration: 0.9,
+        ease: "power3.out",
+        delay: 0.1,
+      });
+
+      gsap.from(".hero-subtitle", {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        ease: "power2.out",
+        delay: 0.25,
+      });
+
+      gsap.from(".hero-meta", {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        ease: "power2.out",
+        delay: 0.35,
+      });
+
+      gsap.from(".hero-cta-group", {
+        opacity: 0,
+        y: 16,
+        duration: 0.8,
+        ease: "power2.out",
+        delay: 0.45,
+      });
+
+      gsap.from(".hero-card", {
+        opacity: 0,
+        y: 40,
+        duration: 1,
+        ease: "power3.out",
+        delay: 0.45,
+      });
+
+      /* 섹션 페이드업 */
+      document.querySelectorAll("[data-animate='fade-up']").forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+          opacity: 0,
+          y: 40,
+          duration: 0.8,
+          ease: "power3.out",
+          delay: (i % 4) * 0.05,
+        });
+      });
+
+      /* 히어로 배경 디졸브 */
+      const bgA = document.querySelector(".hero-bg.bg-a");
+      const bgB = document.querySelector(".hero-bg.bg-b");
+
+      const bgImages = [
+        "images/m-1.jpg",
+        "images/m-2.jpg",
+        "images/m-3.jpg",
+        "images/m-4.jpg",
+      ];
+
+      let current = 0;
+      let showingA = true;
+
+      if (bgA && bgImages.length > 0) {
+        bgA.style.backgroundImage = `url("${bgImages[0]}")`;
+      }
+
+      function dissolveBackground() {
+        if (!bgA || !bgB || bgImages.length < 2) return;
+
+        const next = (current + 1) % bgImages.length;
+
+        if (showingA) {
+          bgB.style.backgroundImage = `url("${bgImages[next]}")`;
+          bgA.style.opacity = 0;
+          bgB.style.opacity = 1;
+        } else {
+          bgA.style.backgroundImage = `url("${bgImages[next]}")`;
+          bgA.style.opacity = 1;
+          bgB.style.opacity = 0;
+        }
+
+        showingA = !showingA;
+        current = next;
+      }
+
+      if (bgImages.length > 1) {
+        setInterval(dissolveBackground, 6000);
+      }
+
+      /* 문의하기 버튼 스크롤 (현재는 카톡 버튼이 따로 있어서 선택사항) */
+      document.querySelectorAll("[data-scroll-to='contact']").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const target = document.getElementById("contact");
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      });
+
+      /* 햄버거 버튼 */
+      const navToggle = document.querySelector(".nav-toggle");
+      const nav = document.querySelector("nav.nav");
+
+      if (navToggle && nav) {
+        navToggle.addEventListener("click", () => {
+          nav.classList.toggle("open");
+        });
+      }
+
+      /* ---- 히어로 카드 이미지 슬라이드 ---- */
+      const cardImg = document.getElementById("hero-card-photo");
+
+      const cardImages = [
+        "images/nr-1.jpg",
+        "images/nr-2.jpg",
+        "images/nr-3.jpg",
+        "images/nr-4.jpg",
+        "images/nr-5.jpg",
+        "images/nr-6.jpg",
+        "images/nr-7.jpg",
+        "images/nr-8.jpg",
+        "images/nr-9.jpg",
+        "images/nr-10.jpg",
+        "images/nr-11.jpg",
+        "images/nr-12.jpg",
+        "images/nr-13.jpg",
+      ];
+
+      let cardIndex = 0;
+
+      function changeHeroCardImage() {
+        if (!cardImg || cardImages.length < 2) return;
+
+        const nextIndex = (cardIndex + 1) % cardImages.length;
+
+        cardImg.classList.add("is-fading");
+
+        setTimeout(() => {
+          cardImg.src = cardImages[nextIndex];
+
+          cardImg.onload = () => {
+            cardImg.classList.remove("is-fading");
+          };
+
+          cardIndex = nextIndex;
+        }, 300);
+      }
+
+      if (cardImages.length > 1) {
+        setInterval(changeHeroCardImage, 5000);
+      }
+
+      /* ---- 로고 클릭 시 상단으로 / 새로고침 ---- */
+      const logoLink = document.querySelector(".logo-link");
+      if (logoLink) {
+        logoLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          // 먼저 스크롤을 화면 최상단으로 이동
+          window.scrollTo(0, 0);
+          // 현재 페이지 경로로 다시 진입하여 최상단에서 새로 로드
+          window.location.replace(window.location.pathname + window.location.search);
+        });
+      }
+    });
+    </script>
+</head>
+<body id="top">
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <button class="nav-toggle" aria-label="메뉴 열기">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <!-- 로고: 클릭 시 새로고침 -->
+        <a href="#home" class="logo logo-link">
+          한결<span>디자인</span>
+        </a>
+      </div>
+
+      <nav class="nav">
+        <a href="#about">회사소개</a>
+        <a href="#services">주요서비스</a>
+        <a href="#portfolio">포트폴리오</a>
+        <a href="#process">진행절차</a>
+        <a href="#contact">문의하기</a>
+      </nav>
+
+      <a class="header-cta" href="http://pf.kakao.com/_gxkxbxgn" target="_blank">
+        무료 상담 요청
+      </a>
+    </div>
+  </header>
+
+  <!-- 히어로 -->
+  <section class="hero" id="home">
+    <div class="hero-bg bg-a"></div>
+    <div class="hero-bg bg-b"></div>
+
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          <span>상업공간 · 프랜차이즈 전문 인테리어</span>
+        </div>
+        <h1 class="hero-title">
+          신뢰와 경험으로 완성하는<br />
+          <strong>당신만의 특별한 공간</strong>
+        </h1>
+        <p class="hero-subtitle">
+          한결디자인은 고객과의 소통과 신뢰를 최우선으로 생각합니다.<br />
+          상업공간, 프랜차이즈 매장, 리모델링까지 기획부터 시공, 감리까지
+          책임지고 관리합니다.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <div class="hero-meta-label">연간 프로젝트</div>
+            <div class="hero-meta-value">50+ 매장</div>
+          </div>
+          <div class="hero-meta-item">
+            <div class="hero-meta-label">전문 분야</div>
+            <div class="hero-meta-value">F&B · 카페 · 프랜차이즈</div>
+          </div>
+          <div class="hero-meta-item">
+            <div class="hero-meta-label">핵심 강점</div>
+            <div class="hero-meta-value">기획 · 설계 · 시공 일원화</div>
+          </div>
+        </div>
+        <div class="hero-cta-group">
+          <a class="btn-primary" href="http://pf.kakao.com/_gxkxbxgn/chat" target="_blank">
+            <i class="fa-solid fa-comment-dots"></i>
+            1:1 상담 신청
+          </a>
+
+          <button class="btn-outline" onclick="document.getElementById('portfolio').scrollIntoView({behavior:'smooth'})">
+            <i class="fa-solid fa-images"></i>
+            포트폴리오 보기
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-card">
+          <div class="hero-card-image">
+            <img
+              id="hero-card-photo"
+              src="images/nr-1.jpg"
+              alt="한결디자인 시공사례"
+            />
+            <div class="hero-card-tag">브랜드별 매장 사진</div>
+          </div>
+          <div class="hero-card-body">
+            <div class="hero-card-title">브랜드 컨셉을 살린 공간 기획</div>
+            <p>
+              매장 동선, 좌석 구성, 키비주얼을 고려한 인테리어로
+              각 브랜드 이미지를 극대화합니다.
+            </p>
+            <div class="hero-card-list">
+              <span class="hero-card-badge">평면·3D 설계</span>
+              <span class="hero-card-badge">시공·감리</span>
+              <span class="hero-card-badge">브랜딩 협업</span>
+            </div>
+            <div class="hero-card-footer">
+              <span>최근 완료된 프로젝트</span>
+              <span>공사기간 4~8주 내외</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-header" data-animate="fade-up">
+        <div class="section-label">About</div>
+        <h2 class="section-title">한결디자인 소개</h2>
+        <p class="section-subtitle">
+          설계부터 시공, 감리까지 한 번에 진행하는 인테리어 전문팀입니다.
+        </p>
+      </div>
+      <div class="about-grid">
+        <div class="about-text" data-animate="fade-up">
+          <p>
+            한결디자인은 상업공간, 프랜차이즈 매장, F&B 브랜드를 중심으로
+            공간 기획과 인테리어 시공을 전문적으로 수행하고 있습니다.
+          </p>
+          <p>
+            점주의 운영 방식과 브랜드 컨셉, 상권 특성까지 반영해
+            실제 매출과 고객 경험에 도움이 되는 공간을 만듭니다.
+          </p>
+          <p>
+            도면·3D 설계, 공사 관리, 하자 보수까지 전 과정을 투명하게 공유하며
+            장기적으로 믿고 맡길 수 있는 파트너가 되겠습니다.
+          </p>
+
+          <div class="about-stats">
+            <div class="about-stat-item">
+              <div class="about-stat-value">13+ 년</div>
+              <div class="about-stat-label">인테리어 실무 경험</div>
+            </div>
+            <div class="about-stat-item">
+              <div class="about-stat-value">500+ 곳</div>
+              <div class="about-stat-label">완료 프로젝트 수</div>
+            </div>
+            <div class="about-stat-item">
+              <div class="about-stat-value">90%+</div>
+              <div class="about-stat-label">재진행·추천 비율</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-image-grid" data-animate="fade-up">
+          <div>
+            <img
+              src="images/a-1.jpeg"
+              alt="도면 작업"
+            />
+          </div>
+          <div>
+            <img
+              src="images/a-2.jpeg"
+              alt="디자인 기획"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-header" data-animate="fade-up">
+        <div class="section-label">Services</div>
+        <h2 class="section-title">주요 서비스</h2>
+        <p class="section-subtitle">
+          상업공간 및 프랜차이즈 특성에 맞춘 토탈 인테리어 서비스를 제공합니다.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card" data-animate="fade-up">
+          <div class="service-icon">
+            <img src="images/pp-01.png" alt="기획 설계 아이콘" />
+          </div>
+          <div class="service-title">기획 · 설계</div>
+          <div class="service-desc">
+            상권·타깃 분석을 바탕으로 동선, 좌석수, 주방·홀 배치까지
+            매출이 나오는 구조로 설계합니다.
+          </div>
+          <div class="service-meta">평면도 · 3D · 인테리어 컨셉 제안</div>
+        </div>
+
+        <div class="service-card" data-animate="fade-up">
+          <div class="service-icon">
+            <img src="images/pp-02.png" alt="시공 아이콘">
+          </div>
+          <div class="service-title">인테리어 시공</div>
+          <div class="service-desc">
+            목공·전기·설비·마감 공정을 통합 관리하여 공사 기간과 비용을
+            효율적으로 조정합니다.
+          </div>
+          <div class="service-meta">상업공간 · 프랜차이즈 · 리모델링</div>
+        </div>
+
+        <div class="service-card" data-animate="fade-up">
+          <div class="service-icon">
+            <img src="images/pp-03.png" alt="감리 아이콘">
+          </div>
+          <div class="service-title">감리 · 하자 관리</div>
+          <div class="service-desc">
+            공정별 점검표를 기준으로 마감 상태를 검수하고,
+            오픈 후 하자 발생 시 신속한 보수를 진행합니다.
+          </div>
+          <div class="service-meta">감리 보고 · 체크리스트 공유</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section class="section" id="portfolio">
+    <div class="container">
+      <div class="section-header" data-animate="fade-up">
+        <div class="section-label">Portfolio</div>
+        <h2 class="section-title">시공 포트폴리오</h2>
+        <p class="section-subtitle">
+          실제 진행한 상업공간. 브랜드별 매장 사진으로 한결디자인의 작업 결과를 확인해 보세요.
+        </p>
+      </div>
+
+      <div class="portfolio-grid">
+        <!-- 각 프로젝트 카드 전체를 a 태그로 감싸서 상세 페이지로 이동 -->
+        <a href="portfolio-youngdabang.html" class="project-card" data-animate="fade-up">
+          <div class="project-thumb">
+            <img
+              src="images/1/1-1.jpg"
+              alt="브랜드 카페 인테리어"
+            />
+          </div>
+          <div class="project-body">
+            <div class="project-title">브랜드 : 청년다방</div>
+            <div class="project-meta">전국 · 15~50평 · 신규.리모델링.상점재건</div>
+            <p>
+              - 대한민국 명품떡볶이 No.1 브랜드<br>
+              뉴트로 컨셉과 위트 있는 타이포그래피로 젊은 감성을 살린 복고풍 공간 구성.
+            </p>
+            <span class="project-tag">F&B · 프랜차이즈</span>
+          </div>
+        </a>
+
+        <a href="portfolio-eunhwasikdang.html" class="project-card" data-animate="fade-up">
+          <div class="project-thumb">
+            <img
+              src="images/2/2-7.jpg"
+              alt="프랜차이즈 음식점"
+            />
+          </div>
+          <div class="project-body">
+            <div class="project-title">브랜드 : 은화수식당</div>
+            <div class="project-meta">전국 · 20~80평 · 신규</div>
+            <p>
+              - 1등 경양식 돈가스 브랜드<br>
+              주방 동선과 홀 좌석을 최적화해 피크 타임에도 효율적인 운영이 가능하도록 설계.
+            </p>
+            <span class="project-tag">F&B · 프랜차이즈</span>
+          </div>
+        </a>
+
+        <a href="portfolio-samdeok.html" class="project-card" data-animate="fade-up">
+          <div class="project-thumb">
+            <img
+              src="images/3/3-1.png"
+              alt="복합문화공간"
+            />
+          </div>
+          <div class="project-body">
+            <div class="project-title">브랜드 : 삼덕통닭</div>
+            <div class="project-meta">부산 · 15~60평 · 신규.리모델링.상점재건</div>
+            <p>
+              - 대구 3대 치킨 브랜드<br>
+              재래시장의 정겨운 분위기를 현대적인 뉴트로 감성으로 재해석한 포차 공간 구성.
+            </p>
+            <span class="project-tag">F&B · 프랜차이즈</span>
+          </div>
+        </a>
+
+        <a href="portfolio-chichi.html" class="project-card" data-animate="fade-up">
+          <div class="project-thumb">
+            <img
+              src="images/4/4-14.jpg"
+              alt="프랜차이즈 음식점"
+            />
+          </div>
+          <div class="project-body">
+            <div class="project-title">브랜드 : 치치</div>
+            <div class="project-meta">전국 · 20~80평 · 신규.리모델링</div>
+            <p>
+              - 맛있는 소리. 이자카야 브랜드<br>
+              따뜻한 우드톤과 은은한 조명을 사용하여 아늑한 심야식당 분위기 구현.
+            </p>
+            <span class="project-tag">F&B · 프랜차이즈</span>
+          </div>
+        </a>
+
+        <a href="portfolio-roomrule.html" class="project-card" data-animate="fade-up">
+          <div class="project-thumb">
+            <img
+              src="images/5/5-2.jpg"
+              alt="프랜차이즈 음식점"
+            />
+          </div>
+          <div class="project-body">
+            <div class="project-title">브랜드 : 룸의정석</div>
+            <div class="project-meta">전국 · 70~120평 · 신규.리모델링</div>
+            <p>
+              - 신개념 룸주점 브랜드<br>
+              프라이빗 룸과 자연스러운 동선, 스마트 기술이 결합된 대형 공간 구성.
+            </p>
+            <span class="project-tag">F&B · 프랜차이즈</span>
+          </div>
+        </a>
+
+        <a href="portfolio-nonda.html" class="project-card" data-animate="fade-up">
+          <div class="project-thumb">
+            <img
+              src="images/6/6-15.jpg"
+              alt="프랜차이즈 음식점"
+            />
+          </div>
+          <div class="project-body">
+            <div class="project-title">브랜드 : 논다</div>
+            <div class="project-meta">전국 · 80~150평 · 신규.리모델링</div>
+            <p>
+              - 방 VS 방 노래대결. 노래타운 브랜드<br>
+              스마트 기술과 세련된 조명으로 연출한 트렌디한 공간.
+            </p>
+            <span class="project-tag">F&B · 프랜차이즈</span>
+          </div>
+        </a>
+
+        <a href="portfolio-supullim.html" class="project-card" data-animate="fade-up">
+          <div class="project-thumb">
+            <img
+              src="images/7/7-14.png"
+              alt="프랜차이즈 음식점"
+            />
+          </div>
+          <div class="project-body">
+            <div class="project-title">브랜드 : SUPULLIM</div>
+            <div class="project-meta">전국 · 45~70평 · 신규.리모델링</div>
+            <p>
+              - 캠핑 포차 No.1. 브랜드<br>
+              실내 방갈로와 텐트 좌석을 배치하여 캠핑장에 온 듯한 이색적인 힐링 공간.
+            </p>
+            <span class="project-tag">F&B · 프랜차이즈</span>
+          </div>
+        </a>
+
+        <a href="portfolio-noriters.html" class="project-card" data-animate="fade-up">
+          <div class="project-thumb">
+            <img
+              src="images/8/8-20.jpg"
+              alt="프랜차이즈 음식점"
+            />
+          </div>
+          <div class="project-body">
+            <div class="project-title">브랜드 : 보드게임카페 노리터</div>
+            <div class="project-meta">전국 · 80~130평 · 신규</div>
+            <p>
+              - 4세대 신개념 보드게임카페 브랜드<br>
+              벙커 침대와 스마트기술, 보드게임으로 만들어진 놀이 공간.
+            </p>
+            <span class="project-tag">F&B · 프랜차이즈</span>
+          </div>
+        </a>
+
+        <a href="portfolio-paranmanjan.html" class="project-card" data-animate="fade-up">
+          <div class="project-thumb">
+            <img
+              src="images/9/9-29.jpg"
+              alt="프랜차이즈 음식점"
+            />
+          </div>
+          <div class="project-body">
+            <div class="project-title">브랜드 : 파란만잔</div>
+            <div class="project-meta">전국 · 20~50평 · 신규</div>
+            <p>
+              - 행복이 시작되는 공간. 카페 브랜드<br>
+              화이트 우드 톤에 플랜테리어를 더해 도심 속 휴식을 주는 따뜻한 카페.
+            </p>
+            <span class="project-tag">F&B · 프랜차이즈</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section" id="process">
+    <div class="container">
+      <div class="section-header" data-animate="fade-up">
+        <div class="section-label">Process</div>
+        <h2 class="section-title">진행 절차</h2>
+        <p class="section-subtitle">
+          상담부터 오픈까지, 진행 과정과 일정·비용을 투명하게 안내드립니다.
+        </p>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step" data-animate="fade-up">
+          <div class="process-step-number">01</div>
+          <div class="process-step-title">상담 · 현장 방문</div>
+          <div class="process-step-desc">
+            점주님 니즈와 예산, 상권 특성을 파악하고 현장을 실측합니다.
+          </div>
+        </div>
+
+        <div class="process-step" data-animate="fade-up">
+          <div class="process-step-number">02</div>
+          <div class="process-step-title">기획 · 설계 제안</div>
+          <div class="process-step-desc">
+            평면도·3D·컨셉 보드를 기반으로 레이아웃과 디자인 방향을 제안합니다.
+          </div>
+        </div>
+
+        <div class="process-step" data-animate="fade-up">
+          <div class="process-step-number">03</div>
+          <div class="process-step-title">공사 · 감리 진행</div>
+          <div class="process-step-desc">
+            공정별 일정에 맞춰 공사를 진행하고, 중간 점검 결과를 공유드립니다.
+          </div>
+        </div>
+
+        <div class="process-step" data-animate="fade-up">
+          <div class="process-step-number">04</div>
+          <div class="process-step-title">준공 · 오픈 지원</div>
+          <div class="process-step-desc">
+            준공 후 하자 점검 및 보수를 진행하고, 오픈 일정에 맞춰 최종 마감을 확인합니다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section-header" data-animate="fade-up">
+        <div class="section-label">Contact</div>
+        <h2 class="section-title">인테리어 문의</h2>
+        <p class="section-subtitle">
+          카카오톡으로 편하게 인테리어 상담을 남겨주세요.
+        </p>
+      </div>
+
+      <div class="contact-simple" data-animate="fade-up">
+        <p>
+          카카오톡 채널로 연결되며,<br />
+          매장 위치, 업종, 예상 일정, 예산 범위 등을<br />
+          자유롭게 남겨주시면, 확인 후 순차적으로 연락드리겠습니다.
+        </p>
+
+        <a
+          href="http://pf.kakao.com/_gxkxbxgn/chat"
+          target="_blank"
+          class="btn-primary btn-kakao"
+        >
+          <strong>카카오톡 문의하기</strong>
+        </a>
+
+        <p style="margin-top: 18px; font-size: 13px; color: #777;">
+          * 카카오톡 채널 설정에서 알림을 켜 두시면, 새로운 문의가 들어올 때 바로 확인하실 수 있습니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 한결디자인. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="#home">맨 위로</a>
+        <a href="#about">회사소개</a>
+        <a href="http://pf.kakao.com/_gxkxbxgn" target="_blank">문의하기</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
