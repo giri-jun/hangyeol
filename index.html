@@ -251,7 +251,7 @@
     }
 
     .hero-subtitle {
-      font-size: clamp(12px, 1.6vw, 16px);
+      font-size: clamp(10px, 1.6vw, 16px);
       opacity: 0.9;
       margin-bottom: 24px;
       word-break: keep-all;
@@ -440,15 +440,6 @@
     }
 
     @media (max-width: 900px) {
-        #process .section-header {
-            text-align: left;
-        }
-
-        #services .section-header,
-        #portfolio .section-header {
-            text-align: left;
-        }
-
       #about,
       #services,
       #portfolio,
@@ -1077,6 +1068,20 @@
         bgA.style.backgroundImage = `url("${bgImages[0]}")`;
       }
 
+      function preloadImages(urls) {
+        return Promise.all(
+          urls.map(
+            (url) =>
+              new Promise((resolve) => {
+                const img = new Image();
+                img.onload = resolve;
+                img.onerror = resolve;
+                img.src = url;
+              })
+          )
+        );
+      }
+
       function dissolveBackground() {
         if (!bgA || !bgB || bgImages.length < 2) return;
 
@@ -1097,7 +1102,9 @@
       }
 
       if (bgImages.length > 1) {
-        setInterval(dissolveBackground, 6000);
+        preloadImages(bgImages).then(() => {
+          setInterval(dissolveBackground, 6000);
+        });
       }
 
       /* 문의하기 버튼 스크롤 (현재는 카톡 버튼이 따로 있어서 선택사항) */
@@ -1257,10 +1264,10 @@
           <div class="hero-card-image">
             <img
               id="hero-card-photo"
-              src="images/HK LOGO1.png"
+              src="images/nr-1.jpg"
               alt="한결디자인 시공사례"
             />
-            <div class="hero-card-tag">시공 사진</div>
+            <div class="hero-card-tag">브랜드별 매장 사진</div>
           </div>
           <div class="hero-card-body">
             <div class="hero-card-title">브랜드 컨셉을 살린 공간 기획</div>
