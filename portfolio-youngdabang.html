@@ -478,13 +478,12 @@
       box-shadow: 0 14px 26px rgba(0, 0, 0, 0.3);
     }
 
-    /* 푸터 */
+    /* Footer */
     footer.footer {
       padding: 24px 0 30px;
       background-color: #111;
       color: #ccc;
       font-size: 12px;
-      margin-top: 40px;
     }
 
     .footer-inner {
@@ -492,10 +491,45 @@
       margin: 0 auto;
       padding: 0 16px;
       display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-row {
+      display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       gap: 12px;
       align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      opacity: 0.8;
+    }
+
+    .footer-links .header-cta {
+      opacity: 1;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    @media (max-width: 640px) {
+      .footer-row-top .footer-links {
+        margin-left: auto;
+      }
+
+      .footer-contact-break {
+        display: block;
+        margin-top: 4px;
+      }
     }
 
     /* 반응형 */
@@ -603,6 +637,45 @@
         padding: 4px 10px;
       }
     }
+
+    .back-to-top {
+      position: fixed;
+      right: 24px;
+      bottom: 60px;
+      z-index: 1000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 28px;
+      font-size: 20px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(6px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .back-to-top.is-visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1024px) {
+      .back-to-top {
+        padding: 10px 24px;
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .back-to-top {
+        padding: 8px 20px;
+        font-size: 16px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -820,7 +893,7 @@
         </div>
       </div>
       <p class="gallery-caption">
-        ※ 위 사진들은 예시 파일명입니다. 실제 이미지 경로에 맞게 파일명을 수정해 주세요.
+        ※ 청년다방 매장은 지점별 상황에 맞춰 마감과 소품을 조정합니다.
       </p>
     </div>
   </section>
@@ -829,15 +902,22 @@
     <img id="lightboxImage" src="" alt="" />
   </div>
 
-  <!-- 푸터 -->
+  <!-- Footer -->
   <footer class="footer">
     <div class="footer-inner">
-      <div>© 한결디자인. All rights reserved.</div>
-      <div>
-        <a href="index.html#portfolio">← 포트폴리오 목록으로 돌아가기</a>
+      <div class="footer-row footer-row-top">
+        <div>한결디자인 | 사업자등록번호: 549-06-03294<span class="footer-contact-break"> | TEL: 010-3914-6048 | EMAIL: pjgil@hkcomm.co.kr</span></div>
+      </div>
+      <div class="footer-row footer-row-bottom">
+        <div class="footer-policy">개인정보처리방침</div>
+        <div>Copyright © HANGYEOL DESIGN. All rights reserved.</div>
       </div>
     </div>
   </footer>
+
+  <button class="back-to-top header-cta" type="button" aria-label="맨 위로" title="맨 위로">
+    &uarr;
+  </button>
 
   <script>
     // 모바일 메뉴 토글 (필요 시) 및 갤러리 라이트박스
@@ -882,6 +962,24 @@
           }
         });
       }
+      const backToTop = document.querySelector(".back-to-top");
+      if (backToTop) {
+        const toggleBackToTop = () => {
+          if (window.scrollY > 200) {
+            backToTop.classList.add("is-visible");
+          } else {
+            backToTop.classList.remove("is-visible");
+          }
+        };
+
+        window.addEventListener("scroll", toggleBackToTop, { passive: true });
+        toggleBackToTop();
+
+        backToTop.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
     });
   </script>
 </body>

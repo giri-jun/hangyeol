@@ -147,6 +147,26 @@
       color: #fff;
     }
 
+      right: 24px;
+      bottom: 60px;
+      z-index: 1000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 28px;
+      font-size: 20px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .back-to-top.is-visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
     .nav-toggle {
       display: none;
       border: none;
@@ -326,6 +346,10 @@
       background: #f0d800;
       color: #111;
       box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .kakao-desc {
+      margin-top: 36px;
     }
 
     .btn-outline {
@@ -756,6 +780,12 @@
       margin: 0 auto;
       padding: 0 16px;
       display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-row {
+      display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       gap: 12px;
@@ -768,8 +798,13 @@
       flex-wrap: wrap;
     }
 
+
     .footer-links a {
       opacity: 0.8;
+    }
+
+    .footer-links .header-cta {
+      opacity: 1;
     }
 
     .footer-links a:hover {
@@ -777,6 +812,16 @@
     }
 
     /* 반응형 */
+        @media (max-width: 640px) {
+        .footer-row-top .footer-links {
+            margin-left: auto;
+        }
+
+        .footer-contact-break {
+            display: block;
+            margin-top: 4px;
+        }
+    }
 
         /* ① 태블릿/좁은 화면일 때 헤더 폰트/여백 줄이기 */
         @media (max-width: 1024px) {
@@ -798,7 +843,13 @@
             font-size: 12px;
         }
 
+        .back-to-top {
+            padding: 10px 24px;
+            font-size: 18px;
+        }
+
     }
+
 
         @media (max-width: 900px) {
         .hero-inner {
@@ -910,6 +961,11 @@
         .header-cta {
             font-size: 11px;
             padding: 4px 10px;
+        }
+
+        .back-to-top {
+            padding: 8px 20px;
+            font-size: 16px;
         }
         /* Process – 모바일 한 줄 */
         .process-steps {
@@ -1187,6 +1243,24 @@
           window.location.replace(window.location.pathname + window.location.search);
         });
       }
+
+      const backToTop = document.querySelector(".back-to-top");
+      if (backToTop) {
+        const toggleBackToTop = () => {
+          if (window.scrollY > 200) {
+            backToTop.classList.add("is-visible");
+          } else {
+            backToTop.classList.remove("is-visible");
+          }
+        };
+
+        window.addEventListener("scroll", toggleBackToTop, { passive: true });
+        toggleBackToTop();
+
+        backToTop.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
     });
     </script>
 </head>
@@ -1458,7 +1532,7 @@
         <a href="portfolio-samdeok.html" class="project-card" data-animate="fade-up">
           <div class="project-thumb">
             <img
-              src="images/3/3-1.png"
+              src="images/3/3-9.png"
               alt="복합문화공간"
             />
           </div>
@@ -1643,12 +1717,6 @@
       </div>
 
       <div class="contact-simple" data-animate="fade-up">
-        <p>
-          카카오톡 채널로 연결되며,<br />
-          매장 위치, 업종, 예상 일정, 예산 범위 등을<br />
-          자유롭게 남겨주시면, 확인 후 순차적으로 연락드리겠습니다.
-        </p>
-
         <a
           href="http://pf.kakao.com/_gxkxbxgn/chat"
           target="_blank"
@@ -1657,8 +1725,14 @@
           <strong>카카오톡 문의하기</strong>
         </a>
 
-        <p style="margin-top: 18px; font-size: 13px; color: #777;">
-          * 카카오톡 채널 설정에서 알림을 켜 두시면, 새로운 문의가 들어올 때 바로 확인하실 수 있습니다.
+        <p class="kakao-desc">
+          카카오톡 채널로 연결되며,<br />
+          매장 위치, 업종, 예상 일정, 예산 범위 등을<br />
+          자유롭게 남겨주시면, 확인 후 순차적으로 연락드리겠습니다.
+        </p>
+
+        <p style="margin-top: 36px; font-size: 13px; color: #777;">
+          * 카카오톡 채널 설정에서 알림을 켜 두시면, 새로운 문의와 답변을 바로 확인하실 수 있습니다.
         </p>
       </div>
     </div>
@@ -1667,13 +1741,18 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-inner">
-      <div>© 한결디자인. All rights reserved.</div>
-      <div class="footer-links">
-        <a href="#home">맨 위로</a>
-        <a href="#about">회사소개</a>
-        <a href="http://pf.kakao.com/_gxkxbxgn" target="_blank">문의하기</a>
+      <div class="footer-row footer-row-top">
+        <div>한결디자인 | 사업자등록번호: 549-06-03294<span class="footer-contact-break"> | TEL: 010-3914-6048 | EMAIL: pjgil@hkcomm.co.kr</span></div>
+      </div>
+      <div class="footer-row footer-row-bottom">
+        <div class="footer-policy">개인정보처리방침</div>
+        <div>Copyright © HANGYEOL DESIGN. All rights reserved.</div>
       </div>
     </div>
   </footer>
+
+  <button class="back-to-top header-cta" type="button" aria-label="맨 위로" title="맨 위로">
+    &uarr;
+  </button>
 </body>
 </html>
